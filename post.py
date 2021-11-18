@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 Created on Fri Oct 15 10:33:10 2021
 
@@ -26,42 +26,31 @@ with open('APT code.txt') as f:
     lines = f.readlines()
     f.close()
 
-
 f2 = open( str(now.strftime("%Y.%m.%d.%H.%M.%S")) +' Output G code.txt', 'a')
 
 
 for i in range(0,len(lines)):
-    CurrentLine = lines[i]
     
-    if(CurrentLine[0:4] == "GOTO"):
-        #print(CurrentLine[0:4])
-        f2.write("N"+str((i+1)*5)+" ")
-        f2.write("X"+CurrentLine[5:10]+" ")
-        f2.write("Y"+CurrentLine[11:16]+" ")
-        f2.write("Z"+CurrentLine[17:22]+" ")
+    currentContent = lines[i].split(",")
+    currentCommand = currentContent[0]
+    
+    #GOTO/ x, y [,z [,i ,j ,k] [,feed]]
+    if(currentCommand[0:4] == "GOTO"):
+        currentContent[0] = currentCommand[5:len(currentCommand)]
+        gotoPrefixes = ['X', 'Y', 'Z', 'I', 'J', 'K', 'F']
+        
+        f2.write("N"+str((i+1)*5))
+        for i in range(0,len(currentContent[:])):
+            f2.write(str(" " + gotoPrefixes[i])+currentContent[i])
         f2.write("\n")
 
-    if(CurrentLine[0:4] == "CIRC"):
-        #print(CurrentLine[0:4])
-        f2.write("N"+str((i+1)*5)+" TODO")
 
 
 V = [0, 0, 1]
 
-#A = math.pi/180 * -36.78066227
-#B = 0
-#C = math.pi/180 * 39.43881764
-
-#A = math.pi/180 * 36.78066227
-#B = 0
-#C = math.pi/180 * (180+39.4388336)
 
 A = math.pi/180 * -27.54332457
 B = math.pi/180 * -25.40287102
-#C = 0
-
-#B = math.pi/180 * -22.35601464
-#A = math.pi/180 * -29.99999583
 C = 0
 
 
