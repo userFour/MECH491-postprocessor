@@ -22,7 +22,10 @@ now = datetime.datetime.now()
 
 
 lines = []
-with open('APT code.txt') as f:
+
+
+with open('APT_SimpleMillPlane.txt') as f:
+#with open('APT code.txt') as f:
     lines = f.readlines()
     f.close()
 
@@ -37,13 +40,13 @@ for i in range(0,len(lines)):
     #GOTO/ x, y [,z [,i ,j ,k] [,feed]]
     if(currentCommand[0:4] == "GOTO"):
         currentContent[0] = currentCommand[5:len(currentCommand)] # Removes "GOTO/" prefix
-        gotoPrefixes = ['X', 'Y', 'Z', 'A', 'C', '', 'F']
+        gotoPrefixes = ['X', 'Y', 'Z', 'B', 'C', '', 'F']
         
         if (len(currentContent[:]) >= 4): # this means that we have i j k values that need processing
             v = np.array([currentContent[3], currentContent[4], currentContent[5]], dtype=float)
-            theta_A = acos(v[2])
-            theta_C = atan2(v[0], v[1])
-            currentContent[3] = str(round(degrees(theta_A),4))
+            theta_B = acos(v[2])
+            theta_C = atan2(v[1], v[0])
+            currentContent[3] = str(round(degrees(theta_B),4))
             currentContent[4] = str(round(degrees(theta_C),4))
             currentContent[5] = "";
         
