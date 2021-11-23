@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 from math import *
 import time as time
+import os
 import sys as sys
 import datetime
 
@@ -27,7 +28,8 @@ now = datetime.datetime.now()
 
 lines = []
 
-
+print("Directory: ", end="")
+print(os.getcwd())
 with open('APT_SimpleMillPlane.txt') as f:
 #with open('APT code.txt') as f:
     lines = f.readlines()
