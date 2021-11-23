@@ -2,7 +2,7 @@
 # 5-Axis Postprocessor Python Implementation
 #
 #
-# Author: Phillip, Markos   Date: 2021-10-15T10:33:10
+# Authors: Phillip, Markos   Date: 2021-10-15T10:33:10
 #
 # ------------------------------------------------------------------------------
 #
