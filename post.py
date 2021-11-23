@@ -37,10 +37,12 @@ for i in range(0,len(lines)):
     currentContent = lines[i].split(",")
     currentCommand = currentContent[0]
     
+    
     #GOTO/ x, y [,z [,i ,j ,k] [,feed]]
     if(currentCommand[0:4] == "GOTO"):
         currentContent[0] = currentCommand[5:len(currentCommand)] # Removes "GOTO/" prefix
         gotoPrefixes = ['X', 'Y', 'Z', 'B', 'C', '', 'F']
+        
         
         if (len(currentContent[:]) >= 4): # this means that we have i j k values that need processing
             v = np.array([currentContent[3], currentContent[4], currentContent[5]], dtype=float)
@@ -54,10 +56,17 @@ for i in range(0,len(lines)):
         
         f2.write("N"+str((i+1)*5))
         for i in range(0,len(currentContent[:])):
-            if(currentContent[i]!= ""):
-                f2.write(str(" "))
-            f2.write(str(gotoPrefixes[i])+currentContent[i])
+                if(currentContent[i]!= ""):
+                    f2.write(str(" "))
+                    f2.write(str(gotoPrefixes[i])+str( round(float(currentContent[i])/25.4, 4) ) )
         f2.write("\n")
 
+
+    #FEDRAT/MMPM, f
+    if(currentCommand[0:11] == "FEDRAT/MMPM"):
+        currentContent = lines[i].split(",")
+        Feed = currentContent[1]
+        f2.write(str("F" +       str( round(float(Feed)/25.4, 4)     )   + "\n"   ))
+        
         
 f2.close()
