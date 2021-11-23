@@ -1,10 +1,14 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Oct 15 10:33:10 2021
-
-@author: phill
-"""
-
+# ------------------------------------------------------------------------------
+# 5-Axis Postprocessor Python Implementation
+#
+#
+# Author: Phillip, Markos   Date: 2021-10-15T10:33:10
+#
+# ------------------------------------------------------------------------------
+#
+# This script creates Gcode from APT code for a 5 axis machine (B, and C axis)
+#
+# ------------------------------------------------------------------------------
 
 import numpy as np 
 import matplotlib.pyplot as plt
