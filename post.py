@@ -92,14 +92,20 @@ for i in range(0,len(lines)):
     #CIRCLE/
     if(currentCommand[0:6] == "CIRCLE"):
         currentContent[0] = currentCommand[7:len(currentCommand)] # Removes "CIRCLE/" prefix
-        circlePrefixes = [' ', ' ']
+        circlePrefixes = ['X', 'Y', 'Z', ' ', ' ', ' ', 'I', 'J', 'K', 'F']
         
+        #print(currentContent)
+
+        outLine = ""
+        for dummy in range(len(circlePrefixes)):
+            if(circlePrefixes[dummy] != ' '):
+                outLine += str(circlePrefixes[dummy]) + str(round(float(currentContent[dummy])/1.00, 4)) + ' '    
+        
+        #print(outLine)
+        outLine = " G03 " + outLine
+
         f2.write("N"+str((i+1)*5))
-        f2.write(str(" G02 OR G03 ... TODO\n"))
-
-
-
-
+        f2.write(outLine)
 
 
     #FEDRAT/MMPM, f
