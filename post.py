@@ -39,12 +39,6 @@ print(os.getcwd())
 #
 #
 
-# Remove redundant positions - TODO
-def removeRedundantPosiotionValues(data, currentToolPosition):
-    #TODO
-    
-    return (data)
-
 # Read input data from CLDATA file
 with open('APT_SimpleMillPlane_ZIG.txt') as f:
     lines = f.readlines()
@@ -139,4 +133,18 @@ for i in range(0,len(lines)):
 f2.close()
 #os.remove(outFile) # Uncomment this line to supress output file
 
-print("End program!\n")        
+print("End program!\n")
+
+# -----------------------------------------------------------------------------
+# Remove redundant positions - TODO
+def removeRedundantPosiotionValues(data, currentToolPosition):
+    #TODO
+    
+    return (data)
+
+# -----------------------------------------------------------------------------
+# Increment line numbers and output text to file
+def writeToFile(inString):
+    #TODO
+    
+    return ()
