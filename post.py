@@ -40,7 +40,7 @@ print(os.getcwd())
 #
 
 # Read input data from CLDATA file
-with open('APT_SimpleMillPlane_ZIG.txt') as f:
+with open('APT_Zig_Zag_Smoothed.txt') as f:
     lines = f.readlines()
     f.close()
 
@@ -93,7 +93,7 @@ for i in range(0,len(lines)):
     # CIRCLE/
     if(currentCommand[0:6] == "CIRCLE"):
         currentContent[0] = currentCommand[7:len(currentCommand)] # Removes "CIRCLE/" prefix
-        circlePrefixes = ['X', 'Y', 'Z', ' ', ' ', ' ', 'I', 'J', 'K', 'F']
+        circlePrefixes = ['X', 'Y', 'Z', ' ', ' ', ' ', 'I', 'J', 'K', ' ', ' ']
         
         # Increment line number, build the string
         lineNumber += 5
@@ -118,10 +118,9 @@ for i in range(0,len(lines)):
 
         # Increment line number, build the string
         lineNumber += 5
-        outLine = "N" + str(lineNumber) + " F "
+        outLine = "N" + str(lineNumber) + " F " + str(Feed)
             
         # Print the output Gcode line
-        outLine += "\n"
         # print(outLine, end="")
         f2.write(outLine)
 
@@ -131,7 +130,7 @@ for i in range(0,len(lines)):
         rapidNextLine = 1
 
 f2.close()
-#os.remove(outFile) # Uncomment this line to supress output file
+os.remove(outFile) # Uncomment this line to supress output file
 
 print("End program!\n")
 
