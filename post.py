@@ -22,7 +22,7 @@ import datetime
 
 # Define some variables
 lines = []
-lineNumber = -5 # Make sure first line number is 0
+lineNumber = 0 # Make sure first line number is 5
 now = datetime.datetime.now()
 outFile = str(now.strftime("%Y.%m.%d.%H.%M.%S")) + " Output G code.txt"
 outLine = ""
@@ -40,7 +40,7 @@ print(os.getcwd())
 #
 
 # Read input data from CLDATA file
-with open('APT_Zig_Zag_Smoothed.txt') as f:
+with open('APT_SimpleMillPlane.txt') as f:
     lines = f.readlines()
     f.close()
 
@@ -80,7 +80,7 @@ for i in range(0,len(lines)):
         for i in range(0, len(currentContent[:])):
             if(currentContent[i]!= ""): # If there is data in the cell
                 outLine += " "
-                outLine += str(gotoPrefixes[i]) + str(round(float(currentContent[i])/1.0, 4))
+                outLine += str(gotoPrefixes[i]) + str(round(float(currentContent[i])/25.4, 4))
         
         # Print the output Gcode line
         outLine += "\n"
@@ -101,7 +101,7 @@ for i in range(0,len(lines)):
 
         for i in range(len(circlePrefixes)):
             if(circlePrefixes[i] != ' '):
-                outLine += str(circlePrefixes[i]) + str(round(float(currentContent[i])/1.00, 4)) + ' '    
+                outLine += str(circlePrefixes[i]) + str(round(float(currentContent[i])/25.4, 4)) + ' '    
         
         # Print the output Gcode line
         outLine += "\n"
@@ -114,7 +114,7 @@ for i in range(0,len(lines)):
         currentContent = lines[i].split(",")
         Feed = currentContent[1]
 
-        outLine += str(round(float(Feed)/1.0, 1))
+        outLine += str(round(float(Feed)/25.4, 1))
 
         # Increment line number, build the string
         lineNumber += 5
@@ -130,7 +130,7 @@ for i in range(0,len(lines)):
         rapidNextLine = 1
 
 f2.close()
-os.remove(outFile) # Uncomment this line to supress output file
+##os.remove(outFile) # Uncomment this line to supress output file
 
 print("End program!\n")
 
