@@ -59,7 +59,7 @@ print("Directory: ", end="")
 print(os.getcwd())
 
 # Read input data from CLDATA file
-with open('APT_Zig_Zag_Smoothed.txt') as f:
+with open('APT_Variable_Axis.txt') as f:
     lines = f.readlines()
     f.close()
 
@@ -90,29 +90,32 @@ for i in range(0, len(lines)):
 
         printFlag = True
 
-        currentContent[0] = currentCommand[5:len(currentCommand)] # Removes "GOTO/" prefix
-        gotoPrefixes = ['X', 'Y', 'Z', 'B', 'C', ' ', 'F']
+        currentContent[0] = currentCommand[5:len(currentCommand)] # Removes "CIRCLE/" prefix
+        gotoPrefixes = ['', 'X', 'Y', 'Z', 'B', 'C', '', 'F']
+        gotoValues = [None, None, None, None, None, None, None, None]
 
         if (rapidNextLine == 1):
-            writeData[0] = "G00"
+            gotoPrefixes[0] = "G00"
             rapidNextLine = 0
         else:
-            writeData[0] = "G01"
+            gotoPrefixes[0] = "G01"
         
-        # Calculate B and C axis position
-        if (len(currentContent[:]) >= 4): # If we have i j k values that need processing
+        # Fill in the gotoValues array
+        gotoValues[1] = str(round(float(currentContent[0]) / conversionFactor, 4))
+        gotoValues[2] = str(round(float(currentContent[1]) / conversionFactor, 4))
+        gotoValues[3] = str(round(float(currentContent[2]) / conversionFactor, 4))
+        if(len(currentContent) == 6): # We have angle data and we need process it
             v = np.array([currentContent[3], currentContent[4], currentContent[5]], dtype=float)
             theta_B = acos(v[2])
-            theta_C = atan2(v[1], v[0])
-            currentContent[3] = str(round(degrees(theta_B),4))
-            currentContent[4] = str(round(degrees(theta_C),4))
-            currentContent[5] = ""
+            theta_C = atan2(abs(v[1]), abs(v[0]))
+            gotoValues[4] = str(round(degrees(theta_B), 4))
+            gotoValues[5] = str(round(degrees(theta_C), 4))
   
-        # Loop over each element
-        for i in range(0, len(currentContent[:])):
-            if(currentContent[i] != ""): # If there is data in the cell
-                # Needs to be (i+1) cause index 0 is for G-command
-                writeData[i+1] = str(gotoPrefixes[i]) + str(round(float(currentContent[i])/conversionFactor, 4))
+        # Send the data to output
+        writeData[0] = gotoPrefixes [0]
+        for i in range(1, len(gotoPrefixes)):
+            if(gotoValues[i] != None): # If there is data in the prefixes cell
+                writeData[i] = str(gotoPrefixes[i]) + str(round(float(gotoValues[i]), 4))
 
     # CIRCLE/
     if(currentCommand[0:6] == "CIRCLE"):
