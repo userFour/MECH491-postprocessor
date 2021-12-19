@@ -22,7 +22,7 @@ import datetime
 
 # Define some variables
 lines = []
-conversionFactor = 25.4
+conversionFactor = 1
 printFlag = False
 lineNumber = 0 # Make sure first line number is 5
 now = datetime.datetime.now()
@@ -106,13 +106,21 @@ for i in range(0, len(lines)):
         gotoValues[3] = str(round(float(currentContent[2]) / conversionFactor, 4))
         if(len(currentContent) == 6): # We have angle data and we need process it
             v = np.array([currentContent[3], currentContent[4], currentContent[5]], dtype=float)
-            theta_B = acos(v[2])
-            theta_C = atan2(abs(v[1]), abs(v[0]))
+            theta_B = -1 * acos(v[2])
+            theta_B = 0
+            theta_C = -1 * atan2(v[0], v[1]) - (pi/2)
+            theta_C = 0
+            # if(v[0] > 0):
+            #     theta_C -= pi
+
             gotoValues[4] = str(round(degrees(theta_B), 4))
             gotoValues[5] = str(round(degrees(theta_C), 4))
-  
+
+        if(lineNumber == 195):
+            print(currentContent)
+
         # Send the data to output
-        writeData[0] = gotoPrefixes [0]
+        writeData[0] = gotoPrefixes[0]
         for i in range(1, len(gotoPrefixes)):
             if(gotoValues[i] != None): # If there is data in the prefixes cell
                 writeData[i] = str(gotoPrefixes[i]) + str(round(float(gotoValues[i]), 4))
